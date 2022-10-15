@@ -1,3 +1,0 @@
-/home/mykyta/Projects/stm32-openlib/cmake-build-debug/CMakeFiles/stm32_openlib.dir
-/home/mykyta/Projects/stm32-openlib/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/mykyta/Projects/stm32-openlib/cmake-build-debug/CMakeFiles/rebuild_cache.dir
