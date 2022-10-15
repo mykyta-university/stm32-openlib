@@ -35,3 +35,5 @@ GPIO_InitTypeDef led_config_set_default(GPIO_InitTypeDef);
 /// @param led_config, led
 /// @return led_config seted for current led
 GPIO_InitTypeDef led_config_set_default_for(GPIO_InitTypeDef, uint32_t);
+
+// TODO: Add next functions: turn on led, is led turn on, turn off led.
