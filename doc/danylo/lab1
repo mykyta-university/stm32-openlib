@@ -1,0 +1,132 @@
+#include "stm32f4xx.h"
+#include "stm32f4xx_gpio.h"
+#include "stm32f4xx_rcc.h"
+#include "stm32f4xx_tim.h"
+#include "misc.h"
+
+#define TURN_FORWARD_DELAY_AMOUNT 15000
+#define TURN_BACK_DELAY_AMOUNT 12000
+
+const int leds_amount = 4;
+
+
+void GPIO_INIT();
+void TIM4_IRQHanglder();
+void turn_off_leds();
+void INTTIM_Config(uint32_t TIM_Period);
+
+
+
+int main() {
+    GPIO_INIT();
+    INTTIM_Config(TURN_FORWARD_DELAY_AMOUNT);
+
+    while(1) {}
+}
+
+void turn_off_leds() {
+    TIM4->CCR1 = 0;
+    TIM4->CCR2 = 0;
+    TIM4->CCR3 = 0;
+    TIM4->CCR4 = 0;
+}
+
+void TIM4_IRQHandler() {
+    static int next_led_id = -1;
+    static int current_mode = 0;
+
+    if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) {
+
+        if (0 == current_mode) {
+            next_led_id++;
+
+            if (next_led_id > leds_amount - 1) {
+                turn_off_leds();
+
+                current_mode = 1;
+                INTTIM_Config(TURN_BACK_DELAY_AMOUNT);
+
+                return;
+            }
+
+            if (0 == next_led_id) {
+                TIM4->CCR2 = (TURN_FORWARD_DELAY_AMOUNT / 2) - (3000) % (TURN_FORWARD_DELAY_AMOUNT / 2);
+            } else if (1 == next_led_id) {
+                TIM4->CCR3 = (TURN_FORWARD_DELAY_AMOUNT / 2) - (3000) % (TURN_FORWARD_DELAY_AMOUNT / 2);
+            } else if(2 == next_led_id) {
+                TIM4->CCR4 = (TURN_FORWARD_DELAY_AMOUNT / 2) - (3000) % (TURN_FORWARD_DELAY_AMOUNT / 2);
+            } else {
+                TIM4->CCR1 = (TURN_FORWARD_DELAY_AMOUNT / 2) - (3000) % (TURN_FORWARD_DELAY_AMOUNT / 2);
+            }
+        } else {
+            next_led_id--;
+
+            if (next_led_id < 0) {
+                turn_off_leds();
+
+                current_mode = 0;
+                INTTIM_Config(TURN_FORWARD_DELAY_AMOUNT);
+
+                return;
+            }
+            switch (next_led_id) {
+                case 1:
+                    TIM4->CCR3 = (TURN_BACK_DELAY_AMOUNT / 2) - (3000) % (TURN_BACK_DELAY_AMOUNT / 2);
+                    break;
+                case 2:
+                    TIM4->CCR4 = (TURN_BACK_DELAY_AMOUNT / 2) - (3000) % (TURN_BACK_DELAY_AMOUNT / 2);
+                    break;
+                case 3:
+                    TIM4->CCR1 = (TURN_BACK_DELAY_AMOUNT / 2) - (3000) % (TURN_BACK_DELAY_AMOUNT / 2);
+                    break;
+                default:
+                    TIM4->CCR2 = (TURN_BACK_DELAY_AMOUNT / 2) - (3000) % (TURN_BACK_DELAY_AMOUNT / 2);
+
+
+            }
+
+
+        }
+
+        TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+    }
+}
+
+
+void INTTIM_Config(uint32_t TIM_Period) {
+    TIM_Cmd(TIM4, DISABLE);
+    TIM_DeInit(TIM4);
+
+    TIM_TimeBaseInitTypeDef time_init_cfg;
+    TIM_OCInitTypeDef oc_cfg;
+
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+
+    time_init_cfg.TIM_Prescaler = 8400 - 1;
+
+    time_init_cfg.TIM_Period = TIM_Period;
+    time_init_cfg.TIM_ClockDivision = 0;
+    time_init_cfg.TIM_CounterMode = TIM_CounterMode_Up;
+    TIM_TimeBaseInit(TIM4, &time_init_cfg);
+
+    oc_cfg.TIM_OCMode = TIM_OCMode_PWM1;
+    oc_cfg.TIM_OCPolarity = TIM_OCPolarity_High;
+    oc_cfg.TIM_OutputState = TIM_OutputState_Enable;
+    oc_cfg.TIM_Pulse = 0;
+
+    TIM_OC1Init(TIM4, &oc_cfg);
+    TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
+
+    TIM_OC2Init(TIM4, &oc_cfg);
+    TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Enable);
+
+    TIM_OC3Init(TIM4, &oc_cfg);
+    TIM_OC3PreloadConfig(TIM4, TIM_OCPreload_Enable);
+
+    TIM_OC4Init(TIM4, &oc_cfg);
+    TIM_OC4PreloadConfig(TIM4, TIM_OCPreload_Enable);
+
+    TIM_ARRPreloadConfig(TIM4, ENABLE);
+
+    TIM_Cmd(TIM4, ENABLE);
+}
