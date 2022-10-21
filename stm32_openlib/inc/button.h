@@ -1,6 +1,5 @@
 #ifndef __BUTTON_H
 #define __BUTTON_H
-#endif
 
 #include "stm32f4xx.h"
 #include "stm32f4xx_rcc.h"
@@ -28,3 +27,5 @@ GPIO_InitTypeDef button_config_set_default(GPIO_InitTypeDef);
 /// @param button
 /// @return ButtonState (Pressed / Not pressed)
 ButtonState is_button_pressed(uint32_t);
+
+#endif

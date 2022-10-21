@@ -1,6 +1,5 @@
 #ifndef __LED_H
 #define __LED_H
-#endif
 
 #include "stm32f4xx.h"
 #include "stm32f4xx_rcc.h"
@@ -37,3 +36,5 @@ GPIO_InitTypeDef led_config_set_default(GPIO_InitTypeDef);
 GPIO_InitTypeDef led_config_set_default_for(GPIO_InitTypeDef, uint32_t);
 
 // TODO: Add next functions: turn on led, is led turn on, turn off led.
+
+#endif
