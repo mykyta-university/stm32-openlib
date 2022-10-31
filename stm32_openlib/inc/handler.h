@@ -32,6 +32,7 @@ void handler_add_button_handler(void (* func)(void*), void * arg) {
     handler->func = func;
     handler->arg = arg;
     if (__EXTI0_IRQHandlerList == NULL) {
+        //TODO: Call initialization or configuration function here
         __EXTI0_IRQHandlerList = arraylist_create(1);
     }
     arraylist_add(__EXTI0_IRQHandlerList, handler);
