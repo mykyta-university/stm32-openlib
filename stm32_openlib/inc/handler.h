@@ -34,7 +34,7 @@ void EXTI0_IRQHandler(void) {
 }
 
 // TODO: create better name
-void *ddddd(void) {
+void Button_handler_INIT(void) {
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
     SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource0);
 
@@ -61,8 +61,7 @@ void handler_add_button_handler(void (*func)(void *), void *arg) {
     handler->func = func;
     handler->arg = arg;
     if (__EXTI0_IRQHandlerList == NULL) {
-//        TODO: Call initialization or configuration function here
-        handler->func = ddddd(); // or ddddd();
+        Button_handler_INIT();
         __EXTI0_IRQHandlerList = arraylist_create(1);
     }
     arraylist_add(__EXTI0_IRQHandlerList, handler);
