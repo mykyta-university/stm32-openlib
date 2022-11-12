@@ -13,7 +13,7 @@ typedef struct arraylist {
 
 
 ArrayList * arraylist_create(int length) {
-    if  (0 == length) {
+    if  (NULL == length) {
         length = 1;
     } else if (length <= 0) {
         return NULL;
