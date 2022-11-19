@@ -45,6 +45,9 @@ ButtonState button_get_state(uint32_t);
 /// @param handler
 void button_add_handler(Handler * handler);
 
+/// @brief Remove all button handlers
+void button_remove_all_handlers();
+
 /*
  * Private function prototypes
  */

@@ -48,7 +48,12 @@ void button_add_handler(Handler * handler) {
         __button_handler_list = arraylist_create(1);
     }
     arraylist_add(__button_handler_list, handler);
-};
+}
+
+/// @brief Remove all button handlers
+void button_remove_all_handlers() {
+    arraylist_remove_all(__button_handler_list);
+}
 
 /*
  * Private function realisation
