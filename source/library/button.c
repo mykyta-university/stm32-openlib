@@ -75,7 +75,7 @@ void __button_init_interrupt() {
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00;
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x00;
     NVIC_Init(&NVIC_InitStructure);
-};
+}
 
 /*
  * Interrupt function realization
