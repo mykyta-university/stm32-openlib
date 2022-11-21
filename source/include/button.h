@@ -25,7 +25,7 @@
  * Make type to define button states PRESSED = BUTTON_PRESSED, NOT PRESSED = BUTTON_FREE
  */
 typedef enum {
-    BUTTON_FREE = 0, BUTTON_PRESSED = !BUTTON_FREE
+    BUTTON_FREE = 0, BUTTON_PRESSED = 1
 } ButtonState;
 
 /*

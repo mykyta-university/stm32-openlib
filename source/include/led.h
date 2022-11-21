@@ -17,7 +17,7 @@
 #define LED_ORANGE  LED_3
 #define LED_RED     LED_5
 #define LED_BLUE    LED_6
-#define LED_ALL     LED_4 | LED_3 | LED_5 | LED_6
+#define LED_ALL     (LED_4 | LED_3 | LED_5 | LED_6)
 
 /*
  * Default GPIO_InitTypeDef for led
