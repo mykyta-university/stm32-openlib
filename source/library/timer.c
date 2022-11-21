@@ -60,23 +60,8 @@ void timer_remove_all_handlers(TIM_TypeDef * timer) {
     }
 }
 
-/// @brief Initialize timer interrupt
+/// @brief Set and start timer
 /// @param timer, prescaler, period
-void timer_init_interrupt(TIM_TypeDef * timer, uint16_t prescaler, uint16_t period) {
-    TIM_Cmd(TIM2, ENABLE);
-    TIM_DeInit(TIM2);
-
-    TIM_TimeBaseInitTypeDef tim_struct;
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
-    tim_struct.TIM_Prescaler = prescaler;
-    tim_struct.TIM_Period = period;
-    tim_struct.TIM_ClockDivision = 0;
-    tim_struct.TIM_CounterMode = TIM_CounterMode_Up;
-    TIM_TimeBaseInit(TIM2, &tim_struct);
-    TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
-    TIM_Cmd(TIM2, ENABLE);
-}
-
 void timer_set_time(TIM_TypeDef * timer, uint16_t prescaler, uint16_t period) {
     uint8_t NVIC_IRQChannel;
 

@@ -24,8 +24,8 @@ void timer_add_handler(TIM_TypeDef*, Handler*);
 /// @brief Remove all timer handlers
 void timer_remove_all_handlers(TIM_TypeDef*);
 
-/// @brief Initialize timer interrupt
+/// @brief Set and start timer
 /// @param timer, prescaler, period
-void timer_init_interrupt(TIM_TypeDef*, uint16_t, uint16_t);
+void timer_set_time(TIM_TypeDef *, uint16_t, uint16_t);
 
 #endif
