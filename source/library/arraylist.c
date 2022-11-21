@@ -89,3 +89,7 @@ void * arraylist_get(ArrayList * list, int index) {
     }
     return list->array[index];
 }
+
+void * arraylist_remove_all(ArrayList * list) {
+    list->size = 0;
+}

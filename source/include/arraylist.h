@@ -27,4 +27,6 @@ int arraylist_set(ArrayList * list, int index, void * value);
 
 void * arraylist_get(ArrayList * list, int index);
 
+void * arraylist_remove_all(ArrayList * list);
+
 #endif
