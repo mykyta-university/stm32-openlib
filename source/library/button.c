@@ -64,22 +64,22 @@ void __button_init_interrupt() {
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
     SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource0);
 
-    EXTI_InitTypeDef EXTI_InitStructure;
-    EXTI_StructInit(&EXTI_InitStructure);
-    EXTI_InitStructure.EXTI_Line = EXTI_Line0;
-    EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-    EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
-    EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-    EXTI_Init(&EXTI_InitStructure);
+    EXTI_InitTypeDef * EXTI_InitStructure = malloc(sizeof(EXTI_InitTypeDef));
+    EXTI_StructInit(EXTI_InitStructure);
+    EXTI_InitStructure->EXTI_Line = EXTI_Line0;
+    EXTI_InitStructure->EXTI_Mode = EXTI_Mode_Interrupt;
+    EXTI_InitStructure->EXTI_Trigger = EXTI_Trigger_Falling;
+    EXTI_InitStructure->EXTI_LineCmd = ENABLE;
+    EXTI_Init(EXTI_InitStructure);
 
     // Enable Interrupt in NVIC
-    NVIC_InitTypeDef NVIC_InitStructure;
-    NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_InitTypeDef * NVIC_InitStructure = malloc(sizeof(NVIC_InitTypeDef));
+    NVIC_InitStructure->NVIC_IRQChannel = EXTI0_IRQn;
+    NVIC_InitStructure->NVIC_IRQChannelCmd = ENABLE;
 
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x00;
-    NVIC_Init(&NVIC_InitStructure);
+    NVIC_InitStructure->NVIC_IRQChannelPreemptionPriority = 0x00;
+    NVIC_InitStructure->NVIC_IRQChannelSubPriority = 0x00;
+    NVIC_Init(NVIC_InitStructure);
 }
 
 /*
