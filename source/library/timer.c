@@ -93,6 +93,10 @@ void timer_set_time(TIM_TypeDef * timer, uint16_t prescaler, uint16_t period) {
 }
 
 void TIM2_IRQHandler(void) {
+    if (TIM_GetITStatus(TIM2, TIM_IT_Update) == RESET) {
+        return;
+    }
+    TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
     if (NULL == __timer2_handler_list) {
         return;
     }
