@@ -31,6 +31,7 @@
 /*
  * Function prototypes
  */
+
 /// @brief Create default GPIO config for led
 /// @return Pointer to led config set by default
 GPIO_InitTypeDef * led_get_default_config();
@@ -40,6 +41,12 @@ GPIO_InitTypeDef * led_get_default_config();
 /// @return Pointer to led config set for specific led
 GPIO_InitTypeDef * led_get_default_config_for(uint32_t);
 
-// TODO: Add next functions: turn on led, is led turn on, turn off led.
+/// @brief Turn on specific led
+/// @param led
+void led_turn_on(uint32_t);
+
+/// @brief Turn off specific led
+/// @param led
+void led_turn_off(uint32_t);
 
 #endif
