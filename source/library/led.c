@@ -15,7 +15,7 @@ GPIO_InitTypeDef * led_get_default_config() {
     config->GPIO_OType = LED_DEFAULT_CONFIG_GPIO_OType;
     config->GPIO_PuPd = LED_DEFAULT_CONFIG_GPIO_PuPd;
     return config;
-};
+}
 
 /// @brief Create default GPIO config for specific led
 /// @param led
@@ -28,4 +28,17 @@ GPIO_InitTypeDef * led_get_default_config_for(uint32_t led) {
     config->GPIO_OType = LED_DEFAULT_CONFIG_GPIO_OType;
     config->GPIO_PuPd = LED_DEFAULT_CONFIG_GPIO_PuPd;
     return config;
-};
+}
+
+/// @brief Turn on specific led
+/// @param led
+void led_turn_on(uint32_t led) {
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+    GPIO_SetBits(GPIOD, led);
+}
+
+/// @brief Turn off specific led
+/// @param led
+void led_turn_off(uint32_t led) {
+    GPIO_ResetBits(GPIOD, led);
+}
