@@ -87,6 +87,11 @@ void __button_init_interrupt() {
  */
 
 void EXTI0_IRQHandler(void) {
+    if (EXTI_GetITStatus(EXTI_Line0) == RESET) {
+        return;
+    }
+    EXTI_ClearITPendingBit(EXTI_Line0);
+
     if (NULL == __button_handler_list) {
         return;
     }
