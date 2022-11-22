@@ -58,7 +58,7 @@ void button_pressed_handler(void *arg) {
     Stream *led_stream = (Stream *) arg;
     led_stream->direction *= -1;
     if (DIRECT == led_stream->direction) {
-        timer_set_time(TIMER_2, 1200, 42000);
+        timer_set_time(TIMER_2, 500, 42000);
     } else if (REVERSED == led_stream->direction) {
         timer_set_time(TIMER_2, 1200, 42000);
     }
