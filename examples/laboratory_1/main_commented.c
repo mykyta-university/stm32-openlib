@@ -6,51 +6,51 @@
 #include "arraylist.h"
 
 
-//створюється структура що визначає напрям
+//СЃС‚РІРѕСЂСЋС”С‚СЊСЃСЏ СЃС‚СЂСѓРєС‚СѓСЂР° С‰Рѕ РІРёР·РЅР°С‡Р°С” РЅР°РїСЂСЏРј
 typedef enum direction {
     DIRECT = 1, REVERSED = -1
 } Direction;
 
-//створення структури стрім
+//СЃС‚РІРѕСЂРµРЅРЅСЏ СЃС‚СЂСѓРєС‚СѓСЂРё СЃС‚СЂС–Рј
 typedef struct stream {
     ArrayList *arraylist;
     Direction direction;
     int current_id;
 } Stream;
 
-//функція створення
+//С„СѓРЅРєС†С–СЏ СЃС‚РІРѕСЂРµРЅРЅСЏ
 Stream *stream_create(ArrayList *arraylist) {
-    Stream *stream = malloc(sizeof(Stream)); //виділення пам'яті під стрім(потік)
-    if (stream == NULL) //якщо пам'ять не виділилась - вихід із програми
+    Stream *stream = malloc(sizeof(Stream)); //РІРёРґС–Р»РµРЅРЅСЏ РїР°Рј'СЏС‚С– РїС–Рґ СЃС‚СЂС–Рј(РїРѕС‚С–Рє)
+    if (stream == NULL) //СЏРєС‰Рѕ РїР°Рј'СЏС‚СЊ РЅРµ РІРёРґС–Р»РёР»Р°СЃСЊ - РІРёС…С–Рґ С–Р· РїСЂРѕРіСЂР°РјРё
         exit(1);
-    stream->current_id = 0; //присвоєння id
-    stream->direction = DIRECT; //присвоєння напряму
-    stream->arraylist = arraylist; //иніціалізація масиву лед
+    stream->current_id = 0; //РїСЂРёСЃРІРѕС”РЅРЅСЏ id
+    stream->direction = DIRECT; //РїСЂРёСЃРІРѕС”РЅРЅСЏ РЅР°РїСЂСЏРјСѓ
+    stream->arraylist = arraylist; //РёРЅС–С†С–Р°Р»С–Р·Р°С†С–СЏ РјР°СЃРёРІСѓ Р»РµРґ
     return stream;
 }
 
-//взяти наступний елемент і перемістити індект поточного елементу на 1 вперед
+//РІР·СЏС‚Рё РЅР°СЃС‚СѓРїРЅРёР№ РµР»РµРјРµРЅС‚ С– РїРµСЂРµРјС–СЃС‚РёС‚Рё С–РЅРґРµРєС‚ РїРѕС‚РѕС‡РЅРѕРіРѕ РµР»РµРјРµРЅС‚Сѓ РЅР° 1 РІРїРµСЂРµРґ
 void *stream_next(Stream *stream) {
-    if (stream->direction == DIRECT) { //якщо напрям потіку прямий
-        if (arraylist_size(stream->arraylist) - 1 == stream->current_id) //оновлення id після включення світла останнього світлодіоду
+    if (stream->direction == DIRECT) { //СЏРєС‰Рѕ РЅР°РїСЂСЏРј РїРѕС‚С–РєСѓ РїСЂСЏРјРёР№
+        if (arraylist_size(stream->arraylist) - 1 == stream->current_id) //РѕРЅРѕРІР»РµРЅРЅСЏ id РїС–СЃР»СЏ РІРєР»СЋС‡РµРЅРЅСЏ СЃРІС–С‚Р»Р° РѕСЃС‚Р°РЅРЅСЊРѕРіРѕ СЃРІС–С‚Р»РѕРґС–РѕРґСѓ
             stream->current_id = 0;
         else
-            stream->current_id++; //наступний свілодіод
-    } else if (stream->direction == REVERSED) { //якщо напрям потоку зворотній
+            stream->current_id++; //РЅР°СЃС‚СѓРїРЅРёР№ СЃРІС–Р»РѕРґС–РѕРґ
+    } else if (stream->direction == REVERSED) { //СЏРєС‰Рѕ РЅР°РїСЂСЏРј РїРѕС‚РѕРєСѓ Р·РІРѕСЂРѕС‚РЅС–Р№
         if (stream->current_id == 0)
-            stream->current_id = arraylist_size(stream->arraylist) - 1; //якщо current_id=0 то встіє на останню позицію
+            stream->current_id = arraylist_size(stream->arraylist) - 1; //СЏРєС‰Рѕ current_id=0 С‚Рѕ РІСЃС‚С–С” РЅР° РѕСЃС‚Р°РЅРЅСЋ РїРѕР·РёС†С–СЋ
         else
-            stream->current_id--; //попередній світлодіод
+            stream->current_id--; //РїРѕРїРµСЂРµРґРЅС–Р№ СЃРІС–С‚Р»РѕРґС–РѕРґ
     }
 
-    return arraylist_get(stream->arraylist, stream->current_id); //повертає наступний потік
+    return arraylist_get(stream->arraylist, stream->current_id); //РїРѕРІРµСЂС‚Р°С” РЅР°СЃС‚СѓРїРЅРёР№ РїРѕС‚С–Рє
 }
-//повернути поточний елемент у стрімі
+//РїРѕРІРµСЂРЅСѓС‚Рё РїРѕС‚РѕС‡РЅРёР№ РµР»РµРјРµРЅС‚ Сѓ СЃС‚СЂС–РјС–
 void *stream_get(Stream *stream) {
-    return arraylist_get(stream->arraylist, stream->current_id); //повертає поточний потік
+    return arraylist_get(stream->arraylist, stream->current_id); //РїРѕРІРµСЂС‚Р°С” РїРѕС‚РѕС‡РЅРёР№ РїРѕС‚С–Рє
 }
-//обробник переривання через таймер
-void timer_light_handler(void *arg) { //обробник таймера хендлера
+//РѕР±СЂРѕР±РЅРёРє РїРµСЂРµСЂРёРІР°РЅРЅСЏ С‡РµСЂРµР· С‚Р°Р№РјРµСЂ
+void timer_light_handler(void *arg) { //РѕР±СЂРѕР±РЅРёРє С‚Р°Р№РјРµСЂР° С…РµРЅРґР»РµСЂР°
     Stream *led_stream = (Stream *) arg;
     uint32_t led_current = *((uint32_t *) stream_get(led_stream));
     uint32_t led_next = *((uint32_t *) stream_next(led_stream));
@@ -58,8 +58,8 @@ void timer_light_handler(void *arg) { //обробник таймера хендлера
     led_turn_off(led_current);
     led_turn_on(led_next);
 }
-//обробний переривання через кнопку
-void button_pressed_handler(void *arg) { //обробний натискання кнопки для зміни напрямку руху і вимкнення
+//РѕР±СЂРѕР±РЅРёР№ РїРµСЂРµСЂРёРІР°РЅРЅСЏ С‡РµСЂРµР· РєРЅРѕРїРєСѓ
+void button_pressed_handler(void *arg) { //РѕР±СЂРѕР±РЅРёР№ РЅР°С‚РёСЃРєР°РЅРЅСЏ РєРЅРѕРїРєРё РґР»СЏ Р·РјС–РЅРё РЅР°РїСЂСЏРјРєСѓ СЂСѓС…Сѓ С– РІРёРјРєРЅРµРЅРЅСЏ
     Stream *led_stream = (Stream *) arg;
     led_stream->direction *= -1;
     if (DIRECT == led_stream->direction) {
@@ -71,30 +71,30 @@ void button_pressed_handler(void *arg) { //обробний натискання кнопки для зміни 
 }
 //
 int main() {
-    uint32_t led_1 = LED_3; //створення змінних що зберігають значення світодіодів
+    uint32_t led_1 = LED_3; //СЃС‚РІРѕСЂРµРЅРЅСЏ Р·РјС–РЅРЅРёС… С‰Рѕ Р·Р±РµСЂС–РіР°СЋС‚СЊ Р·РЅР°С‡РµРЅРЅСЏ СЃРІС–С‚РѕРґС–РѕРґС–РІ
     uint32_t led_2 = LED_4;
     uint32_t led_3 = LED_5;
     uint32_t led_4 = LED_6;
 
-    ArrayList *led_list = arraylist_create(4); //ініціалізація масиву
-    Stream *led_stream = stream_create(led_list); //ініціалізація потоку
+    ArrayList *led_list = arraylist_create(4); //С–РЅС–С†С–Р°Р»С–Р·Р°С†С–СЏ РјР°СЃРёРІСѓ
+    Stream *led_stream = stream_create(led_list); //С–РЅС–С†С–Р°Р»С–Р·Р°С†С–СЏ РїРѕС‚РѕРєСѓ
 
-    Handler *timer_handler = handler_create(&timer_light_handler, led_stream); //стоврення хендленра
-    Handler *button_handler = handler_create(&button_pressed_handler, led_stream); //створення обробника кнопки
+    Handler *timer_handler = handler_create(&timer_light_handler, led_stream); //СЃС‚РѕРІСЂРµРЅРЅСЏ С…РµРЅРґР»РµРЅСЂР°
+    Handler *button_handler = handler_create(&button_pressed_handler, led_stream); //СЃС‚РІРѕСЂРµРЅРЅСЏ РѕР±СЂРѕР±РЅРёРєР° РєРЅРѕРїРєРё
 
-    GPIO_InitTypeDef *led_config = led_get_default_config(); //дефолтний конфіг для світодіодів
+    GPIO_InitTypeDef *led_config = led_get_default_config(); //РґРµС„РѕР»С‚РЅРёР№ РєРѕРЅС„С–Рі РґР»СЏ СЃРІС–С‚РѕРґС–РѕРґС–РІ
 
-    arraylist_add(led_list, (void *) &led_1); //додаємо наш стрім світодіоду
+    arraylist_add(led_list, (void *) &led_1); //РґРѕРґР°С”РјРѕ РЅР°С€ СЃС‚СЂС–Рј СЃРІС–С‚РѕРґС–РѕРґСѓ
     arraylist_add(led_list, (void *) &led_2);
     arraylist_add(led_list, (void *) &led_3);
     arraylist_add(led_list, (void *) &led_4);
 
-    GPIO_Init(GPIOD, led_config); //ініціалізуємо gpio для ледів
+    GPIO_Init(GPIOD, led_config); //С–РЅС–С†С–Р°Р»С–Р·СѓС”РјРѕ gpio РґР»СЏ Р»РµРґС–РІ
 
-    timer_add_handler(TIMER_2, timer_handler); //додаємо хендлер для таймеру
-    timer_set_time(TIMER_2, 500, 42000); //засікаємо час на таймері
+    timer_add_handler(TIMER_2, timer_handler); //РґРѕРґР°С”РјРѕ С…РµРЅРґР»РµСЂ РґР»СЏ С‚Р°Р№РјРµСЂСѓ
+    timer_set_time(TIMER_2, 500, 42000); //Р·Р°СЃС–РєР°С”РјРѕ С‡Р°СЃ РЅР° С‚Р°Р№РјРµСЂС–
     
-    button_add_handler(button_handler); //додаємо обробник кнопки
+    button_add_handler(button_handler); //РґРѕРґР°С”РјРѕ РѕР±СЂРѕР±РЅРёРє РєРЅРѕРїРєРё
 
     while (1);
 }
