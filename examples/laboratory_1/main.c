@@ -5,6 +5,7 @@
 #include "led.h"
 #include "arraylist.h"
 
+
 typedef enum direction {
     DIRECT = 1, REVERSED = -1
 } Direction;
