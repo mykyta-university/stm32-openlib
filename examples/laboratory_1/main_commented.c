@@ -51,23 +51,23 @@ void *stream_get(Stream *stream) {
 }
 //обробник переривання через таймер
 void timer_light_handler(void *arg) { //обробник таймера хендлера
-    Stream *led_stream = (Stream *) arg;
-    uint32_t led_current = *((uint32_t *) stream_get(led_stream));
-    uint32_t led_next = *((uint32_t *) stream_next(led_stream));
+    Stream *led_stream = (Stream *) arg; // Отримуємо аргумент (в даному випадку стрім)
+    uint32_t led_current = *((uint32_t *) stream_get(led_stream)); // Беремо поточний світлодіод
+    uint32_t led_next = *((uint32_t *) stream_next(led_stream)); // Беремо наступний світлодіод
 
-    led_turn_off(led_current);
-    led_turn_on(led_next);
+    led_turn_off(led_current); // Вимикаємо поточний світлодіод
+    led_turn_on(led_next); // Вмикаємо наступний світлодіод
 }
 //обробний переривання через кнопку
 void button_pressed_handler(void *arg) { //обробний натискання кнопки для зміни напрямку руху і вимкнення
-    Stream *led_stream = (Stream *) arg;
-    led_stream->direction *= -1;
+    Stream *led_stream = (Stream *) arg; // Отримуємо аргумент (в даному випадку стрім)
+    led_stream->direction *= -1; // Змінюємо напрям
     if (DIRECT == led_stream->direction) {
-        timer_set_time(TIMER_2, 1200, 42000);
-    } else if (REVERSED == led_stream->direction) {
+        timer_set_time(TIMER_2, 500, 42000);                  // В залежнсоті від напрямку
+    } else if (REVERSED == led_stream->direction) {            // налаштовуємо час на таймері
         timer_set_time(TIMER_2, 1200, 42000);
     }
-    led_turn_off(LED_ALL);
+    led_turn_off(LED_ALL); // Вимикаємо усі світлодіоди
 }
 //
 int main() {
