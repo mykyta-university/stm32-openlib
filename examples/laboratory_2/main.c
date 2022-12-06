@@ -120,8 +120,6 @@ void Delay(uint32_t nCount) {
 
 
 int main() {
-    unsigned char a;
-    // ініціалізуємо 2 ADC, щоб потім не ініціалізувати
     adc_init(ADC1);
     initPWM(LED_BLUE);
 
