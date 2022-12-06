@@ -88,7 +88,6 @@ void adc_init(ADC_TypeDef* ADCx) {
 }
 
 // Читаємо байти
-// Можна вибрати тепер яке ADC ініціалізувати
 u16 readADC1(u8 channel) {
     ADC_RegularChannelConfig(ADC1, channel, 1, ADC_SampleTime_3Cycles);
     ADC_SoftwareStartConv(ADC1);
